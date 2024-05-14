@@ -21,6 +21,11 @@ class NbtFragment : Fragment() {
     private var _binding: FragmentNbtRatesBinding? = null
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding?.progressBar?.isVisible = false
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,9 +48,9 @@ class NbtFragment : Fragment() {
     }
 
     private fun loadNbtRates() {
-        binding.progressBar.isVisible = true
-        binding.contentPanel.isVisible = false
-        binding.errorPanel.isVisible = false
+        _binding?.progressBar?.isVisible = true
+        _binding?.contentPanel?.isVisible = false
+        _binding?.errorPanel?.isVisible = false
 
 
         RetrofitApi.getNbtRates().enqueue(object : Callback<List<NbtRateItem>> {

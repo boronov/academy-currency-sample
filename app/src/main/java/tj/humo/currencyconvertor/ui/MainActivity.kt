@@ -10,7 +10,7 @@ import tj.humo.currencyconvertor.ui.nbtRates.NbtFragment
 class MainActivity : AppCompatActivity() {
     private lateinit var converterFragment: ConverterFragment
     private lateinit var nbtFragment: NbtFragment
-    
+
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,25 +20,56 @@ class MainActivity : AppCompatActivity() {
         converterFragment = ConverterFragment()
         nbtFragment = NbtFragment()
 
-
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, nbtFragment)
+
+            .add(R.id.container, nbtFragment, "nbtFragment")
+            .add(R.id.container, converterFragment, "converterFragment")
             .commit()
 
 
-        binding.buttonConverter.setOnClickListener {
+        /*binding.buttonConverter.setOnClickListener {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, converterFragment)
+                .show(converterFragment)
                 .commit()
         }
 
         binding.buttonNbt.setOnClickListener {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, nbtFragment)
+                .show(nbtFragment)
                 .commit()
+        }*/
+
+
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_exchangers -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .hide(nbtFragment)
+                        .show(converterFragment)
+                        .commit()
+                }
+
+                R.id.menu_nbt -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .hide(converterFragment)
+                        .show(nbtFragment)
+                        .commit()
+                }
+            }
+
+
+            true
         }
     }
+
+
+    data class User(
+        val name: String,
+        val age: Int,
+    )
 }
