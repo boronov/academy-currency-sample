@@ -6,6 +6,6 @@ import tj.humo.currencyconvertor.data.models.NbtRateItem
 
 interface CurrencyRateApiServices {
 
-    @GET("nbt_rates")
+    @GET("data.json")
     fun getNbtRates(): Call<List<NbtRateItem>>
 }

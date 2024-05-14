@@ -17,7 +17,6 @@ class ConverterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentConverterBinding.inflate(layoutInflater, container, false)
-        arguments
         return _binding?.root
     }
 

@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_exchangers"
+        android:id="@+id/nav_converter"
         android:icon="@drawable/baseline_10k_24"
         android:title="Обменники" />
 
     <item
-        android:id="@+id/menu_nbt"
+        android:id="@+id/nav_nbt"
         android:icon="@drawable/baseline_10k_24"
         android:title="НБТ" />
 </menu>

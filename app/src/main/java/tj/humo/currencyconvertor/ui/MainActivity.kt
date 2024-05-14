@@ -2,74 +2,38 @@ package tj.humo.currencyconvertor.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import tj.humo.currencyconvertor.R
 import tj.humo.currencyconvertor.databinding.ActivityMainBinding
 import tj.humo.currencyconvertor.ui.converter.ConverterFragment
 import tj.humo.currencyconvertor.ui.nbtRates.NbtFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var converterFragment: ConverterFragment
-    private lateinit var nbtFragment: NbtFragment
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        converterFragment = ConverterFragment()
-        nbtFragment = NbtFragment()
 
-        supportFragmentManager
-            .beginTransaction()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
+        navController = navHostFragment.navController
 
-            .add(R.id.container, nbtFragment, "nbtFragment")
-            .add(R.id.container, converterFragment, "converterFragment")
-            .commit()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_converter,
+                R.id.nav_nbt
+            )
+        )
 
-
-        /*binding.buttonConverter.setOnClickListener {
-            supportFragmentManager
-                .beginTransaction()
-                .show(converterFragment)
-                .commit()
-        }
-
-        binding.buttonNbt.setOnClickListener {
-            supportFragmentManager
-                .beginTransaction()
-                .show(nbtFragment)
-                .commit()
-        }*/
-
-
-        binding.bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.menu_exchangers -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .hide(nbtFragment)
-                        .show(converterFragment)
-                        .commit()
-                }
-
-                R.id.menu_nbt -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .hide(converterFragment)
-                        .show(nbtFragment)
-                        .commit()
-                }
-            }
-
-
-            true
-        }
+        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
     }
-
-
-    data class User(
-        val name: String,
-        val age: Int,
-    )
 }

@@ -8,7 +8,7 @@ import tj.humo.currencyconvertor.data.models.NbtRateItem
 
 object RetrofitApi {
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://transfer.humo.tj/currency-app/v1/")
+        .baseUrl("https://appsmile.ru/api/academy/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

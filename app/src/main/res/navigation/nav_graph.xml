@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_converter">
+
+    <fragment
+        android:id="@+id/nav_converter"
+        android:name="tj.humo.currencyconvertor.ui.converter.ConverterFragment"
+        android:label="Converter"
+        tools:layout="@layout/fragment_converter" />
+
+    <fragment
+        android:id="@+id/nav_nbt"
+        android:name="tj.humo.currencyconvertor.ui.nbtRates.NbtFragment"
+        android:label="Nbt rates"
+        tools:layout="@layout/fragment_nbt_rates" >
+        <action
+            android:id="@+id/action_nav_nbt_to_nav_sample"
+            app:destination="@id/nav_sample" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_sample"
+        android:name="tj.humo.currencyconvertor.ui.sample.SampleFragment"
+        android:label="{toolbar_title}">
+
+        <argument
+            android:name="toolbar_title_new"
+            app:argType="string" />
+
+        <argument
+            android:name="currency_name"
+            app:argType="string" />
+
+    </fragment>
+</navigation>
