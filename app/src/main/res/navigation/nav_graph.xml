@@ -3,35 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_converter">
+    app:startDestination="@id/nav_exchangers">
 
     <fragment
         android:id="@+id/nav_converter"
         android:name="tj.humo.currencyconvertor.ui.converter.ConverterFragment"
-        android:label="Converter"
-        tools:layout="@layout/fragment_converter" />
+        android:label="{title}"
+        tools:layout="@layout/fragment_converter">
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_nbt"
         android:name="tj.humo.currencyconvertor.ui.nbtRates.NbtFragment"
-        android:label="Nbt rates"
-        tools:layout="@layout/fragment_nbt_rates" >
+        android:label="@string/title_nbt_rates"
+        tools:layout="@layout/fragment_nbt_rate">
+
         <action
-            android:id="@+id/action_nav_nbt_to_nav_sample"
-            app:destination="@id/nav_sample" />
+            android:id="@+id/action_nav_nbt_to_nav_converter"
+            app:destination="@id/nav_converter" />
     </fragment>
     <fragment
-        android:id="@+id/nav_sample"
-        android:name="tj.humo.currencyconvertor.ui.sample.SampleFragment"
-        android:label="{toolbar_title}">
-
-        <argument
-            android:name="toolbar_title_new"
-            app:argType="string" />
-
-        <argument
-            android:name="currency_name"
-            app:argType="string" />
-
+        android:id="@+id/nav_exchangers"
+        android:name="tj.humo.currencyconvertor.ui.exchangers.ExchangersFragment"
+        android:label="@string/title_exchangers"
+        tools:layout="@layout/fragment_exchangers">
+        <action
+            android:id="@+id/action_nav_exchangers_to_nav_converter"
+            app:destination="@id/nav_converter" />
     </fragment>
+
 </navigation>

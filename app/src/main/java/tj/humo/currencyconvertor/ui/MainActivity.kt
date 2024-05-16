@@ -2,7 +2,9 @@ package tj.humo.currencyconvertor.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -21,19 +23,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        navController =
+            (supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment).navController
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
-        navController = navHostFragment.navController
+        val topIdSet = setOf(
+            R.id.nav_exchangers,
+            R.id.nav_nbt
+        )
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_converter,
-                R.id.nav_nbt
+        NavigationUI.setupWithNavController(
+            binding.toolbar, navController, AppBarConfiguration(
+                topIdSet
             )
         )
 
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            binding.bottomNavigation.isVisible = topIdSet.contains(destination.id)
+        }
     }
 }
