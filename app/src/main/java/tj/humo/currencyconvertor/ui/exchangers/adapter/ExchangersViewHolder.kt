@@ -1,6 +1,7 @@
 package tj.humo.currencyconvertor.ui.exchangers.adapter
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.bumptech.glide.Glide
 import tj.humo.currencyconvertor.R
 import tj.humo.currencyconvertor.data.models.ExchangerItem
@@ -9,7 +10,10 @@ import tj.humo.currencyconvertor.databinding.ItemExchangerBinding
 import tj.humo.currencyconvertor.databinding.ItemNbtRateBinding
 import kotlin.math.floor
 
-class ExchangersViewHolder(private val binding: ItemExchangerBinding) :
+class ExchangersViewHolder(
+    private val binding: ItemExchangerBinding,
+    private val viewPool: RecycledViewPool
+) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: ExchangerItem, listener: (ExchangerItem) -> Unit) {
         with(binding) {
@@ -27,11 +31,14 @@ class ExchangersViewHolder(private val binding: ItemExchangerBinding) :
 
             textViewBankName.text = item.bankName
 
-            // TODO
-            /*textViewValue.text = String.format("%.6f", item.value / item.nominal) + " c."
+            recyclerViewCurrency.setRecycledViewPool(viewPool)
+            recyclerViewCurrency.adapter = CurrencyAdapter(item.currency) {
 
-            textViewCurrencyName.text = item.name
-            textViewCurrencyFullName.text = item.fullName*/
+            }
         }
+    }
+
+    companion object {
+        const val VIEW_TYPE = 1
     }
 }

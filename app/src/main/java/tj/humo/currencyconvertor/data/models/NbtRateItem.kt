@@ -8,11 +8,11 @@ data class NbtRateItem(
     @SerializedName("name")
     val name: String,
     @SerializedName("nominal")
-    val nominal: Float,
+    val nominal: Double,
     @SerializedName("full_name")
     val fullName: String,
     @SerializedName("flag")
     val flag: String,
     @SerializedName("value")
-    val value: Float
+    val value: Double
 )

@@ -85,18 +85,14 @@
 
             </LinearLayout>
 
-            <include
-                android:id="@+id/usd_rate"
-                layout="@layout/item_currency" />
-
-            <include
-                android:id="@+id/rub_rate"
-                layout="@layout/item_currency" />
-
-            <include
-                android:id="@+id/eur_rate"
-                layout="@layout/item_currency" />
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_currency" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

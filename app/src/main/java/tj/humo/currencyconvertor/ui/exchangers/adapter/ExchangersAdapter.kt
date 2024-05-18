@@ -11,13 +11,19 @@ class ExchangersAdapter(
     private val listener: (item: ExchangerItem) -> Unit
 ) : RecyclerView.Adapter<ExchangersViewHolder>() {
 
+    private val viewPool = RecyclerView.RecycledViewPool()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExchangersViewHolder {
         val binding =
             ItemExchangerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ExchangersViewHolder(binding)
+        return ExchangersViewHolder(binding, viewPool)
     }
 
     override fun getItemCount(): Int = dataSet.size
+
+    override fun getItemViewType(position: Int): Int {
+        return ExchangersViewHolder.VIEW_TYPE
+    }
 
     override fun onBindViewHolder(holder: ExchangersViewHolder, position: Int) {
         holder.bind(dataSet[position], listener)

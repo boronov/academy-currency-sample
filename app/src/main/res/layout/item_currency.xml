@@ -21,6 +21,7 @@
             tools:src="@tools:sample/avatars" />
 
         <TextView
+            android:id="@+id/text_view_currency_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -32,6 +33,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/text_view_buy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -42,6 +44,7 @@
         android:textSize="16sp" />
 
     <TextView
+        android:id="@+id/text_view_sell"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

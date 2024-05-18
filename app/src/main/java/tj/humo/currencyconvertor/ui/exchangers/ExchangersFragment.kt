@@ -1,5 +1,6 @@
 package tj.humo.currencyconvertor.ui.exchangers
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

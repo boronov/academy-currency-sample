@@ -42,5 +42,6 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             binding.bottomNavigation.isVisible = topIdSet.contains(destination.id)
         }
+
     }
 }
