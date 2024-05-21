@@ -19,5 +19,3 @@ object RetrofitApi {
 
     fun getExchangersRate(): Call<List<ExchangerItem>> = currencyRateApiServices.getExchangersRate()
 }
-
-

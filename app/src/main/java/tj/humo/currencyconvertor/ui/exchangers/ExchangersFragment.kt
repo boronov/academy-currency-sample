@@ -1,18 +1,14 @@
 package tj.humo.currencyconvertor.ui.exchangers
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import tj.humo.currencyconvertor.data.RetrofitApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import tj.humo.currencyconvertor.data.models.ExchangerItem
 import tj.humo.currencyconvertor.databinding.FragmentExchangersBinding
 import tj.humo.currencyconvertor.ui.exchangers.adapter.ExchangersAdapter
@@ -22,10 +18,7 @@ class ExchangersFragment : Fragment() {
     private var _binding: FragmentExchangersBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        _binding?.progressBar?.isVisible = false
-    }
+    private val viewModel: ExchangerViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +31,18 @@ class ExchangersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadNbtRates()
+        setLoading(viewModel.isLoading)
+        setError(viewModel.errorMessage)
+
+        if (viewModel.dataSet.isEmpty()) {
+            viewModel.loadNbtRates(
+                onError = ::setError,
+                onLoading = ::setLoading,
+                onSuccess = ::setupRecyclerView
+            )
+        } else {
+            setupRecyclerView(viewModel.dataSet)
+        }
     }
 
     override fun onDestroyView() {
@@ -46,47 +50,26 @@ class ExchangersFragment : Fragment() {
         _binding = null
     }
 
-    private fun loadNbtRates() {
-        binding.progressBar.isVisible = true
-        binding.recyclerViewRates.isVisible = false
-        binding.errorPanel.isVisible = false
+    private fun setLoading(isLoading: Boolean) {
+        binding.recyclerViewRates.isVisible = !isLoading
+        binding.errorPanel.isVisible = !isLoading
+    }
 
+    private fun setError(message: String?) {
+        binding.recyclerViewRates.isVisible = !message.isNullOrEmpty()
+        binding.errorPanel.isVisible = message.isNullOrEmpty()
+        binding.textViewErrorMessage.text = message
+    }
 
-        RetrofitApi.getExchangersRate().enqueue(object : Callback<List<ExchangerItem>> {
-            override fun onResponse(
-                p0: Call<List<ExchangerItem>>,
-                p1: Response<List<ExchangerItem>>
-            ) {
-                if (this@ExchangersFragment.isAdded) {
-                    binding.progressBar.isVisible = false
-
-                    if (p1.isSuccessful) {
-                        binding.recyclerViewRates.adapter =
-                            ExchangersAdapter(dataSet = p1.body() ?: emptyList()) {
-                                val action =
-                                    ExchangersFragmentDirections.actionNavExchangersToNavConverter(
-                                        title = it.bankName
-                                    )
-                                findNavController().navigate(action)
-                            }
-
-                        binding.recyclerViewRates.isVisible = true
-                    } else {
-
-                        binding.errorPanel.isVisible = true
-                        binding.textViewErrorMessage.text = "Что-то пошло не так"
-                    }
-                }
-            }
-
-            override fun onFailure(p0: Call<List<ExchangerItem>>, p1: Throwable) {
-                if (this@ExchangersFragment.isAdded) {
-                    binding.progressBar.isVisible = false
-                    binding.recyclerViewRates.isVisible = false
-                    binding.errorPanel.isVisible = true
-                    binding.textViewErrorMessage.text = p1.message
-                }
-            }
-        })
+    private fun setupRecyclerView(dataSet: List<ExchangerItem>) {
+        binding.recyclerViewRates.isVisible = true
+        binding.recyclerViewRates.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerViewRates.adapter = ExchangersAdapter(dataSet) {
+            val action =
+                ExchangersFragmentDirections.actionNavExchangersToNavConverter(
+                    title = it.bankName
+                )
+            findNavController().navigate(action)
+        }
     }
 }
