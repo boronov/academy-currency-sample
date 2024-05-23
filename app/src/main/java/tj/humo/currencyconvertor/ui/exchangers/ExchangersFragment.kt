@@ -1,12 +1,14 @@
 package tj.humo.currencyconvertor.ui.exchangers
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import tj.humo.currencyconvertor.data.models.ExchangerItem
@@ -31,17 +33,11 @@ class ExchangersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setLoading(viewModel.isLoading)
-        setError(viewModel.errorMessage)
 
-        if (viewModel.dataSet.isEmpty()) {
-            viewModel.loadNbtRates(
-                onError = ::setError,
-                onLoading = ::setLoading,
-                onSuccess = ::setupRecyclerView
-            )
-        } else {
-            setupRecyclerView(viewModel.dataSet)
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            setLoading(it.isLoading)
+            setError(it.errorMessage)
+            setupRecyclerView(it.dataSet)
         }
     }
 
@@ -51,18 +47,19 @@ class ExchangersFragment : Fragment() {
     }
 
     private fun setLoading(isLoading: Boolean) {
-        binding.recyclerViewRates.isVisible = !isLoading
-        binding.errorPanel.isVisible = !isLoading
+        binding.progressBar.isVisible = isLoading
     }
 
     private fun setError(message: String?) {
-        binding.recyclerViewRates.isVisible = !message.isNullOrEmpty()
-        binding.errorPanel.isVisible = message.isNullOrEmpty()
+        binding.errorPanel.isVisible = !message.isNullOrEmpty()
         binding.textViewErrorMessage.text = message
+        binding.reloadButton.setOnClickListener {
+            viewModel.reload()
+        }
     }
 
     private fun setupRecyclerView(dataSet: List<ExchangerItem>) {
-        binding.recyclerViewRates.isVisible = true
+        binding.recyclerViewRates.isVisible = dataSet.isNotEmpty()
         binding.recyclerViewRates.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewRates.adapter = ExchangersAdapter(dataSet) {
             val action =

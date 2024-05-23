@@ -1,5 +1,7 @@
 package tj.humo.currencyconvertor.ui.exchangers
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -8,44 +10,56 @@ import tj.humo.currencyconvertor.data.RetrofitApi
 import tj.humo.currencyconvertor.data.models.ExchangerItem
 
 class ExchangerViewModel : ViewModel() {
-    var isLoading: Boolean = false
-    var errorMessage: String? = null
-    var dataSet: List<ExchangerItem> = emptyList()
+    private val _uiStateMutable: MutableLiveData<ExchangerUIState> =
+        MutableLiveData(ExchangerUIState())
+    val uiState: LiveData<ExchangerUIState> get() = _uiStateMutable
 
-    fun loadNbtRates(
-        onError: (message: String?) -> Unit,
-        onLoading: (isLoading: Boolean) -> Unit,
-        onSuccess: (dataSet: List<ExchangerItem>) -> Unit
-    ) {
-        isLoading = true
-        onLoading(isLoading)
+    init {
+        loadRates()
+    }
 
+    fun reload() {
+        loadRates()
+    }
+
+    private fun loadRates() {
+        _uiStateMutable.value = _uiStateMutable.value?.copy(
+            isLoading = true,
+            errorMessage = null
+        )
 
         RetrofitApi.getExchangersRate().enqueue(object : Callback<List<ExchangerItem>> {
             override fun onResponse(
                 p0: Call<List<ExchangerItem>>,
                 p1: Response<List<ExchangerItem>>
             ) {
-                isLoading = false
-                onLoading(isLoading)
 
                 if (p1.isSuccessful) {
-                    errorMessage = null
-                    dataSet = p1.body() ?: emptyList()
-                    onSuccess(dataSet)
+                    _uiStateMutable.value = _uiStateMutable.value?.copy(
+                        isLoading = false,
+                        errorMessage = null,
+                        dataSet = p1.body() ?: emptyList()
+                    )
                 } else {
-                    errorMessage = "Что-то пошло не так"
-                    onError(errorMessage)
+                    _uiStateMutable.value = _uiStateMutable.value?.copy(
+                        isLoading = false,
+                        errorMessage = "Что-то пошло не так"
+                    )
                 }
             }
 
             override fun onFailure(p0: Call<List<ExchangerItem>>, p1: Throwable) {
-                isLoading = false
-                onLoading(isLoading)
-
-                errorMessage = p1.message
-                onError(errorMessage)
+                _uiStateMutable.value = _uiStateMutable.value?.copy(
+                    isLoading = false,
+                    errorMessage = p1.message
+                )
             }
         })
     }
 }
+
+data class ExchangerUIState(
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null,
+    val dataSet: List<ExchangerItem> = emptyList()
+)
