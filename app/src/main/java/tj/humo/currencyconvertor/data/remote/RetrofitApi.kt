@@ -1,11 +1,11 @@
-package tj.humo.currencyconvertor.data
+package tj.humo.currencyconvertor.data.remote
 
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import tj.humo.currencyconvertor.data.api.CurrencyRateApiServices
-import tj.humo.currencyconvertor.data.models.ExchangerItem
-import tj.humo.currencyconvertor.data.models.NbtRateItem
+import tj.humo.currencyconvertor.data.remote.api.CurrencyRateApiServices
+import tj.humo.currencyconvertor.data.remote.models.ExchangerItem
+import tj.humo.currencyconvertor.data.remote.models.NbtRateItem
 
 object RetrofitApi {
     private val retrofit: Retrofit = Retrofit.Builder()

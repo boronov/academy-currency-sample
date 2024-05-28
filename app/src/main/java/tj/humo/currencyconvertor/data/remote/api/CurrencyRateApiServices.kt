@@ -1,9 +1,9 @@
-package tj.humo.currencyconvertor.data.api
+package tj.humo.currencyconvertor.data.remote.api
 
 import retrofit2.Call
 import retrofit2.http.GET
-import tj.humo.currencyconvertor.data.models.ExchangerItem
-import tj.humo.currencyconvertor.data.models.NbtRateItem
+import tj.humo.currencyconvertor.data.remote.models.ExchangerItem
+import tj.humo.currencyconvertor.data.remote.models.NbtRateItem
 
 interface CurrencyRateApiServices {
 

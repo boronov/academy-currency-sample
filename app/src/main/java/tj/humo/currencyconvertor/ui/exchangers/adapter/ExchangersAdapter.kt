@@ -3,7 +3,7 @@ package tj.humo.currencyconvertor.ui.exchangers.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tj.humo.currencyconvertor.data.models.ExchangerItem
+import tj.humo.currencyconvertor.data.remote.models.ExchangerItem
 import tj.humo.currencyconvertor.databinding.ItemExchangerBinding
 
 class ExchangersAdapter(

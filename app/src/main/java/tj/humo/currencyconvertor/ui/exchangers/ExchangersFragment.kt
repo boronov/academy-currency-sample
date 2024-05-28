@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import tj.humo.currencyconvertor.data.models.ExchangerItem
+import tj.humo.currencyconvertor.data.remote.models.ExchangerItem
 import tj.humo.currencyconvertor.databinding.FragmentExchangersBinding
 import tj.humo.currencyconvertor.ui.exchangers.adapter.ExchangersAdapter
 

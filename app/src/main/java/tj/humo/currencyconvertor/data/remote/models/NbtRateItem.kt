@@ -1,4 +1,4 @@
-package tj.humo.currencyconvertor.data.models
+package tj.humo.currencyconvertor.data.remote.models
 
 import com.google.gson.annotations.SerializedName
 

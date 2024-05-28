@@ -3,7 +3,7 @@ package tj.humo.currencyconvertor.ui.nbtRates.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tj.humo.currencyconvertor.data.models.NbtRateItem
+import tj.humo.currencyconvertor.data.remote.models.NbtRateItem
 import tj.humo.currencyconvertor.databinding.ItemNbtRateBinding
 
 class NbtAdapter(

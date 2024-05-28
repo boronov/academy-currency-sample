@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tj.humo.currencyconvertor.data.RetrofitApi
-import tj.humo.currencyconvertor.data.models.ExchangerItem
+import tj.humo.currencyconvertor.data.remote.RetrofitApi
+import tj.humo.currencyconvertor.data.remote.models.ExchangerItem
 
 class ExchangerViewModel : ViewModel() {
     private val _uiStateMutable: MutableLiveData<ExchangerUIState> =

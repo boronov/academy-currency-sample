@@ -1,7 +1,7 @@
 package tj.humo.currencyconvertor.ui.nbtRates.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import tj.humo.currencyconvertor.data.models.NbtRateItem
+import tj.humo.currencyconvertor.data.remote.models.NbtRateItem
 import tj.humo.currencyconvertor.databinding.ItemNbtRateBinding
 import tj.humo.currencyconvertor.ui.loadRoundedImageWithCache
 import tj.humo.currencyconvertor.ui.toFormattedMoney

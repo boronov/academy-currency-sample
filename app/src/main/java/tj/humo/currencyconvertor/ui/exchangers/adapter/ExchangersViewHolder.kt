@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.bumptech.glide.Glide
 import tj.humo.currencyconvertor.R
-import tj.humo.currencyconvertor.data.models.ExchangerItem
-import tj.humo.currencyconvertor.data.models.NbtRateItem
+import tj.humo.currencyconvertor.data.remote.models.ExchangerItem
+import tj.humo.currencyconvertor.data.remote.models.NbtRateItem
 import tj.humo.currencyconvertor.databinding.ItemExchangerBinding
 import tj.humo.currencyconvertor.databinding.ItemNbtRateBinding
 import kotlin.math.floor

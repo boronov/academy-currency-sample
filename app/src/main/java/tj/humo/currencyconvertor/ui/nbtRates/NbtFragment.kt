@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tj.humo.currencyconvertor.data.RetrofitApi
-import tj.humo.currencyconvertor.data.models.NbtRateItem
+import tj.humo.currencyconvertor.data.remote.RetrofitApi
+import tj.humo.currencyconvertor.data.remote.models.NbtRateItem
 import tj.humo.currencyconvertor.databinding.FragmentNbtRateBinding
 import tj.humo.currencyconvertor.ui.nbtRates.adapter.NbtAdapter
 
