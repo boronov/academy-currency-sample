@@ -32,7 +32,6 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             android:padding="16dp"
-            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:context=".MainActivity"
             tools:listitem="@layout/item_nbt_rate" />
